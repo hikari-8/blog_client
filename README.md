@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# personal blog
+
+Committer: @hikari-8
+
+## This repo is working in progress...🏃
+
+## Table of Contents
+
+-   [Personal Blog](#personal-blog)
+    -   [Getting Started](#getting-started)
+    -   [Installation](#installation)
+    -   [Connecting to Expo Project](#connecting-to-expo-project)
+    -   [Installation](#installation)
+    -   [Running the App](#running-the-app)
+-   [Project Structure](#project-structure)
+-   [Components Breakdown](#components-breakdown)
+-   [Dependencies](#dependencies)
+-   [Design Pattern](#design-pattern)
+-   [Test](#test)
+    -   [Test library, tool](#test-library-tool)
+    -   [Test rule](#test-rule)
 
 ## Getting Started
 
-First, run the development server:
+To get started with this application, follow the instructions below:
+
+### Installation
+
+1. Clone this repository to your local machine
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd blog_client
+    ```
+
+3. Install the project dependencies using npm:
+
+    ```bash
+    npm install
+    ```
+
+### Running the App
+
+Run the **_npm run dev_** command:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### WIP
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The project structure is organized as follows:
 
-## Learn More
+```text
+└── src/
+    ├── __generated__/            #  Generated types and mock data by Orval
+    ├── app/                      #  Navigation for App Router
+    ├── assets/                   #  Reusable or global assets like images, fonts, etc.
+    └─- components/
+    |    ├── page/                #  Each pages
+    |    ├── *Features/           #  Application's features (begin with Uppercase)
+    |    ├── ui/                  #  Globally reusable UI components
+    |    └── functional/          #  Globally reusable functional which has no view, only behavior
+    ├── contexts/                 #  Globally reusable state
+    ├── services/                 #  Application services like API clients
+    ├── themes/                   #  Globally reusable themes like color, layouts, etc.
+    ├── utils/                    #  Utility/helper functions
+    └── stories/                  #  Storybook ui parts and tests
+```
 
-To learn more about Next.js, take a look at the following resources:
+＊ src/app の役割は基本的にルーティングのみとする
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Components Breakdown
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+アプリケーションに存在する Component を以下の 4 種類に分類してディレクトリを分ける
 
-## Deploy on Vercel
+```bash
+-   src/components/page
+-   src/components/${Feature}
+-   src/components/ui
+-   src/components/functional
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+src/components/page : 1 つのページを表すコンポーネント
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+src/components/${Feature} : 何らかのドメインに関心を持つコンポーネント (ドメインごとにディレクトリを切る, ディレクトリ名は他コンポーネントとの差別化のため大文字で始める)
+
+src/components/ui : ドメインに関心がないコンポーネント
+
+src/components/functional : ドメインに関心がなく、view を持たず振る舞いのみを持つコンポーネント
+
+## Dependencies
+
+自分の右側に存在しているコンポーネントを import してよい。  
+page 以外は自分の所属する分類軸の参照も可能。
+依存関係のチェックは、[eslint-plugin-strict-dependencies](`https://www.npmjs.com/package/eslint-plugin-strict-dependencies`)で静的に行なっている。
+
+```text
+functional or ui → models → page
+```
+
+## Test
+
+### Test library, tool
+
+-   E2E test : Playwright
+-   Unit test : Jest
+-   UI test : StoryBook
+-   Accessibility test : axe-core, lighthouse
+
+### Test rule
